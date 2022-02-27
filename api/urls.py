@@ -1,9 +1,8 @@
 # coding: utf-8
+from django.urls import path, include
+from .views import DataViewSet
 
-from rest_framework import routers
-from .views import DataViewSet, LimitViewSet
 
-
-router = routers.DefaultRouter()
-router.register(r'data', DataViewSet)
-router.register(r'limit', LimitViewSet)
+urlpatterns = [
+    path('data/', DataViewSet.as_view()),
+]

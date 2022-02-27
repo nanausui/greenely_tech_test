@@ -1,34 +1,37 @@
-import django_filters
-from rest_framework import viewsets
-from django_filters import rest_framework as filters 
+from rest_framework.generics import GenericAPIView, ListAPIView
+import django_filters.rest_framework
 
 from .models import User, Days, Months
 from django.db.models import Max, Min
 
 from .serializer import UserSerializer, DaysSerializer, MonthsSerializer
 
-class DataFilter(filters.FilterSet):
-    timestamp = filters.DateFromToRangeFilter()
 
-    class Meta:
-        model = Days
-        fields = ['timestamp'] 
-
-
-class DataViewSet(viewsets.ModelViewSet):
-    queryset = Days.objects.all()
+class DataViewSet(ListAPIView):
+    queryset = Days.objects.filter(user_id=1)
     serializer_class = DaysSerializer
-    filter_class = DataFilter 
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
 
 
-class LimitViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all().filter(
-        # filterling with lonin user's id
-        id=1
-    ).annotate(
-        month_max_con=Max('months__consumption'), 
-        month_min_con=Min('months__consumption'),
-        day_max_con=Max('days__consumption'), 
-        day_min_con=Min('days__consumption')
-    )
-    serializer_class = UserSerializer
+    def get_queryset(self):
+
+        resolution = self.request.query_params.get('resolution')
+        if resolution == "months":
+            queryset = Months.objects.filter(user_id=1)
+        else:
+            queryset = Days.objects.filter(user_id=1)
+
+        return queryset
+
+
+    def get_serializer_class(self):
+        resolution = self.request.query_params.get('resolution') 
+        
+        if resolution == "months":
+            self.serializer_class = MonthsSerializer
+        else:
+            self.serializer_class = DaysSerializer
+
+        return self.serializer_class
+
+

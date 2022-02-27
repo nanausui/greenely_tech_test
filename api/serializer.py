@@ -5,13 +5,13 @@ from .models import User, Days, Months
 class DaysSerializer(serializers.ModelSerializer):
     class Meta:
         model = Days
-        fields = ( 'day_id', 'user', 'timestamp', 'consumption', 'temperature' )
+        fields = ( 'timestamp', 'consumption', 'temperature' )
 
 
 class MonthsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Months
-        fields = ('user', 'timestamp', 'consumption', 'temperature')
+        fields = ( 'timestamp', 'consumption', 'temperature' )
 
 
 class UserSerializer(serializers.ModelSerializer):
