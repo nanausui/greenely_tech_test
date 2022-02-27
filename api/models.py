@@ -1,25 +1,21 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
-
-class User(models.Model):
-    name = models.CharField(max_length=32)
-    mail = models.EmailField()
-
-    def __str__(self):
-        return self.name
-
+class User(AbstractUser):
+    pass
 
 class Days(models.Model):
-    day_id = models.IntegerField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField()
+    day_id = models.AutoField(primary_key=True, blank=True)
+    user_id = models.IntegerField()
+    timestamp = models.TextField()
     consumption = models.IntegerField()
     temperature = models.IntegerField()
 
+
 class Months(models.Model):
-    month_id = models.IntegerField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField()
+    month_id = models.AutoField(primary_key=True, blank=True)
+    user_id = models.IntegerField()
+    timestamp = models.TextField()
     consumption = models.IntegerField()
     temperature = models.IntegerField()
 

@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-!e&1g_qckd9g58nn6m5!8az#w!vlz2&5j+^$$(x+6!=-z@iw(o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.56.142']
 
 
 # Application definition
@@ -79,8 +79,8 @@ WSGI_APPLICATION = 'greenely_tech_test.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        #'NAME': BASE_DIR / 'test_data.db',
+        #'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'test_data.db',
 
     }
 }
@@ -103,6 +103,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = 'api.User'
 
 
 # Internationalization
